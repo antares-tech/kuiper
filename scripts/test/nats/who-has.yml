@@ -1,0 +1,10 @@
+header:
+  v:    1
+  id:   "WHO-HAS"
+  to:   "addressable-endpoint"
+  from: "someone=presence"
+  type: "req"
+  tag:  "tag"
+  ts:   "ISO-format-timestamp"
+payload:
+  group : "com.3apples.dev"

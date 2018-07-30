@@ -1,0 +1,24 @@
+header:
+  v:    1
+  id:   "ENQUEUE-CALL"
+  to:   "addressable-endpoint"
+  from: "xyz=user,l01=lobby"
+  type: "req"
+  tag:  "tag"
+  ts:   "ISO-format-timestamp"
+
+payload:
+  # The group to which he wants to connect to
+  group: "com.3apples.dev"
+
+  # if agent_ae is specified then this caller wants to talk to the
+  # specific agent only. The agent_ae could be a fully qualified
+  # addressable endpoint (avinash=user,p01=presence) or just a hint
+  # (avinash=user). The code should be able to handle both the
+  # scenarios.
+  #
+  # agent_ae: avinash=user
+
+  # "enqueue_ts" should be filled in by the Lobby Node, to indicate
+  # the original time when the this caller connected to the lobby
+  enqueue_ts: "ISO-format-timestap"

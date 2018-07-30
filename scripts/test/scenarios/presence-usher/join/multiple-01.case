@@ -1,0 +1,149 @@
+#########################################################
+#
+# Scenario:
+#	- tony "vinod" registers repeatedly on the same socket
+#
+# Expected Result:
+#	- there should be no problem
+#	- he should be registered as an tony
+#
+#########################################################
+
+#
+# Presence Information
+#
+$pres_host       << "localhost"
+$pres_port       << 4000
+$pres_id         << "p01"
+$presence_aep    << (($pres_id + "=presence"))
+
+#
+# Usher Information
+#
+$usher_id        << "SUZIEQ"
+
+#
+# Agent Information
+#
+$g_musicians     << "awesome-guitarists-group"
+$tony_id         << "tony-iommi"
+$steve_id        << "steve-vai"
+$joe_id          << "joe-satriani"
+$rhandy_id       << "rhandy-rhodes"
+
+$g_aunties       << "frustrated-aunties-group"
+$jane_id         << "listless-jane"
+$susan_id        << "despo-susan"
+$kelly_id        << "bleeding-kelly"
+$aunty_id        << "irritating-aunty"
+
+$tony_aep        << (($tony_id + "=user," + $pres_id + "=presence"))
+$token           << "abcd"
+
+#
+# REST Commands
+#
+$usher_http      << rest-init usher id $usher_id
+$pres_http       << rest-init presence id $pres_id host "localhost" port "4002"
+
+#
+# Agents registering
+#
+$tony   << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $tony_id   group $g_musicians
+$steve  << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $steve_id  group $g_musicians
+$joe    << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $joe_id    group $g_musicians
+$rhandy << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $rhandy_id group $g_musicians
+
+$jane   << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $jane_id  group $g_aunties
+$susan  << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $susan_id group $g_aunties
+$kelly  << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $kelly_id group $g_aunties
+$aunty  << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $aunty_id group $g_aunties
+
+AUTHENTICATE user $tony   token $token
+AUTHENTICATE user $steve  token $token
+AUTHENTICATE user $joe    token $token
+AUTHENTICATE user $rhandy token $token
+AUTHENTICATE user $jane   token $token
+AUTHENTICATE user $susan  token $token
+AUTHENTICATE user $kelly  token $token
+AUTHENTICATE user $aunty  token $token
+
+WHOS-MY-USHER user $tony
+WHOS-MY-USHER user $steve
+WHOS-MY-USHER user $joe
+WHOS-MY-USHER user $rhandy
+WHOS-MY-USHER user $jane
+WHOS-MY-USHER user $susan
+WHOS-MY-USHER user $kelly
+WHOS-MY-USHER user $aunty
+
+#
+# Assert that presence has just 2 groups
+#
+rest-get show-response node $pres_http path "/diagnostics/groups"
+assert ((Object.keys ($response).length == 2))
+assert (($response[$g_musicians].total == 4))
+assert (($response[$g_aunties].total == 4))
+
+#
+# Assert that the Usher "has" this group
+#
+rest-get show-response node $usher_http path "/diagnostics/groups"
+assert (($response[$g_musicians]))
+assert (($response[$g_aunties  ]))
+assert (($response[$g_musicians].agents.free.length == 0))
+assert (($response[$g_musicians].agents.busy.length == 0))
+assert (($response[$g_aunties  ].agents.free.length == 0))
+assert (($response[$g_aunties  ].agents.busy.length == 0))
+
+#
+# Make agents available
+#
+AGENT-AVAILABLE user $tony
+AGENT-AVAILABLE user $steve
+AGENT-AVAILABLE user $joe
+AGENT-AVAILABLE user $rhandy
+AGENT-AVAILABLE user $jane
+AGENT-AVAILABLE user $susan
+AGENT-AVAILABLE user $kelly
+AGENT-AVAILABLE user $aunty
+
+sleep 200
+rest-get show-response node $usher_http path "/diagnostics/groups"
+assert (($response[$g_musicians].agents.free.length == 4))
+assert (($response[$g_musicians].agents.busy.length == 0))
+assert (($response[$g_aunties  ].agents.free.length == 4))
+assert (($response[$g_aunties  ].agents.busy.length == 0))
+
+rest-get show-response node $usher_http path "/diagnostics/agents"
+assert (($response[$g_musicians].free[$tony.aep  ]))
+assert (($response[$g_musicians].free[$steve.aep ]))
+assert (($response[$g_musicians].free[$joe.aep   ]))
+assert (($response[$g_musicians].free[$rhandy.aep]))
+assert (($response[$g_aunties  ].free[$susan.aep ]))
+assert (($response[$g_aunties  ].free[$jane.aep  ]))
+assert (($response[$g_aunties  ].free[$kelly.aep ]))
+assert (($response[$g_aunties  ].free[$aunty.aep ]))
+
+DISCONNECT user $tony
+DISCONNECT user $steve
+DISCONNECT user $joe
+DISCONNECT user $rhandy
+DISCONNECT user $jane
+DISCONNECT user $susan
+DISCONNECT user $kelly
+DISCONNECT user $aunty
+
+#
+# None of the groups and users should now be available
+#
+sleep 200
+rest-get show-response node $pres_http path "/diagnostics/groups"
+assert ((!$response[$g_musicians]))
+assert ((!$response[$g_aunties]))
+
+rest-get show-response node $usher_http path "/diagnostics/groups"
+assert ((!$response[$g_musicians]))
+assert ((!$response[$g_aunties  ]))
+
+exit

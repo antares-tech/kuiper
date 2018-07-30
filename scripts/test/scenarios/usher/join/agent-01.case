@@ -1,0 +1,29 @@
+#
+# Initial variables 
+#
+$presence_id     << "p01"
+$presence_ch     << (("CH-UCAST-TO-P-" + $presence_id))
+$presence_aep    << (($presence_id + "=presence"))
+$lobby_id        << "lobster"
+$lobby_aep       << (($lobby_id + "=lobby"))
+$group           << "com.3apples.co"
+$agent           << "vinod"
+$agent_aep       << (($agent + "=user," + $presence_id + "=presence"))
+$caller          << "who_kaun_thee"
+$caller_aep      << (($caller + "=user," + $lobby_id + "=lobby"))
+
+#
+# Open presence RX broadcast channel
+#
+nats-init
+open channel "CH-BCAST-TO-PRESENCE"
+open channel $presence_ch
+
+#
+# agent vinod registering
+#
+who-has from $presence_aep group $group
+print $response.payload.channel
+i-am-available from $agent_aep  group $group channel $response.payload.channel
+
+exit

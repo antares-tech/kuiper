@@ -1,0 +1,61 @@
+#!/bin/bash
+
+#
+# Get canonical paths
+#
+export CWD_CANONICAL=$CWD
+DIR=`dirname $0`
+export DIR_CANONICAL=`cd $DIR; pwd`
+. $DIR_CANONICAL/common.sh
+
+#
+# Usage
+#
+function usage {
+	echo Usage : `basename $0` ' options';
+	echo '      --id (OPTIONAL)            : id of the user';
+	echo '      --all (OPTIONAL)           : get all users';
+	echo
+	echo '  options can be a sequence of the following:';
+	echo '      --help                     : print this help';
+	echo
+
+	exit 1;
+}
+
+#--------------------------------------------------------------
+# Script specific code here
+#--------------------------------------------------------------
+ID=
+ALL=NO
+
+#
+# Process arguments
+#
+
+while [ $# -gt 0 ];
+do
+	case $1 in
+		--help) usage;
+			;;
+		--id) ID=$2; shift;
+			;;
+		--all) ALL=YES; shift;
+			;;
+		*) CONSUL_OPTIONS=$CONSUL_OPTIONS" "$1;
+			;;
+	esac
+	shift;
+done
+
+[ "$ALL" = "YES" ] && {
+	node $JS_DIR/generic-service-get.js --service user --path /profile/query/all;
+	exit 0;
+}
+
+[ -z "$ID" ] || {
+	node $JS_DIR/generic-service-get.js --service user --path /profile/$ID;
+	exit 0;
+}
+
+usage;

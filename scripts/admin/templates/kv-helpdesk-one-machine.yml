@@ -1,0 +1,42 @@
+# Global Config
+config/global/addr     : =host=
+config/global/port     : =port=
+config/global/protocol : =proto=
+config/global/proxy    : =proxy=
+
+# User Config
+config/srv/user/db                        : 'mongodb://localhost:27017/user?maxPoolSize=10'
+config/srv/user/password/salt/length      : '64'
+config/srv/user/password/salt/charset     : 'alphanumeric'
+config/srv/user/password/length           : '64'
+config/srv/user/password/digest           : 'sha512'
+
+# App global config
+config/app/global/auth/port               : '3002'
+config/app/global/auth/proxy_prefix       : 'auth'
+
+# Auth app config
+config/app/auth/port                      : '3002'
+config/app/auth/protocol                  : 'http'
+config/app/auth/proxy_prefix              : 'auth'
+
+# Presence app config
+config/app/presence/network/local/ws/host   : 'localhost'
+config/app/presence/network/local/ws/port   : '4000'
+config/app/presence/network/local/ws/proto  : 'ws'
+config/app/presence/network/local/rest/port : '4002'
+config/app/presence/trunk/port              : '4001'
+config/app/presence/nats/timeout            : '5000'
+
+# Lobby app config
+config/app/lobby/network/local/ws/host   : 'localhost'
+config/app/lobby/network/local/ws/port   : '5000'
+config/app/lobby/network/local/ws/proto  : 'ws'
+config/app/lobby/network/local/rest/port : '5002'
+config/app/lobby/trunk/port              : '5001'
+config/app/lobby/nats/timeout            : '5000'
+
+# Usher service config
+config/srv/usher/host                     : 'localhost'
+config/srv/usher/redis/unix-socket        : '/var/run/redis/redis.sock'
+config/srv/usher/nats/req-timeout         : '5000'

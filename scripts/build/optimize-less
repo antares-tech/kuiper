@@ -1,0 +1,15 @@
+#!/bin/bash
+
+[ $# -lt 2 ] && { echo Usage: `basename $0` '<filepath-without-extension> <output-dir>'; exit 1; }
+
+FILE_STEM=$1;
+OUT_DIR=$2
+
+[ -f "$FILE_STEM".less ] || { echo file $FILE_STEM.less does not exist; exit 1; }
+[ -d "$OUT_DIR" ] || { echo dir $OUT_DIR does not exist; exit 1; }
+
+FILENAME=`basename $FILE_STEM`
+echo $FILENAME
+
+set -x
+lessc $FILE_STEM.less --clean-css="--s1 --advanced --compatibility=ie8" $OUT_DIR/$FILENAME.min.css

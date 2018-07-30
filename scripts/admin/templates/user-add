@@ -1,0 +1,7 @@
+{
+	"id"          : "__ID__",
+	"firstName"   : "__FNAME__",
+	"lastName"    : "__LNAME__",
+	"email"       : "__EMAIL__",
+	"createdBy"   : "__WHO__"
+}

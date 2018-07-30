@@ -1,0 +1,42 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set encoding=utf-8
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'dNitro/vim-pug-complete'
+Plugin 'digitaltoad/vim-pug'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ternjs/tern_for_vim.git'
+Plugin 'groenewege/vim-less'
+
+"
+" " All of your Plugins must be added before the following line
+"
+call vundle#end()            " required
+
+let g:syntastic_check_on_open=1
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+" "filetype plugin on
+"
+set tabstop=4
+set shiftwidth=4
+set hlsearch
+set incsearch
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:syntastic_javascript_checkers = ['eslint']
+
+syntax on
+filetype plugin indent on
+
+map  :cp
+

@@ -1,0 +1,71 @@
+#
+# Presence Information
+#
+$pres_host       << "localhost"
+$pres_port       << 4000
+$pres_id         << "p01"
+$presence_aep    << (($pres_id + "=presence"))
+
+#
+# Lobby Information
+#
+$lobby_host      << "localhost"
+$lobby_port      << 5000
+$lobby_id        << "l01"
+$lobby_aep       << (($lobby_id + "=lobby"))
+
+#
+# Agent Information
+#
+$group           << "com.3apples.co"
+$agent_id        << "vinod"
+$agent_aep       << (($agent_id + "=user," + $pres_id + "=presence"))
+$token           << "abcd"
+
+#
+# Caller Information
+#
+$caller_id       << "vishwamitra"
+$caller_aep      << (($caller_id + "=user," + $lobby_id + "=lobby"))
+
+#
+# Open presence RX broadcast channel
+#
+nats-init
+
+#
+# Setup callbacks for expected incoming messages
+#
+on-message socket id $agent_id msg-id "PLEASE-CALL"
+	- print ((`got PLEASE-CALL for agent ${$agent_id}`))
+	- ack socket status "ok"
+	- exit
+
+#
+# agent vinod registering
+#
+$agent << CONNECT presence host $pres_host port $pres_port node-id $pres_id user-id $agent_id group $group
+AUTHENTICATE user $agent token $token
+
+assert (($response.header.type == 'ok'))
+assert (($response.header.from == $presence_aep))
+assert (($response.payload.your_aep == $agent_aep))
+
+WHOS-MY-USHER user $agent
+assert (($response.header.type == 'ok'))
+
+AGENT-AVAILABLE user $agent
+assert (($response.header.type == 'ok'))
+
+#
+# Lobby enqueueing a call
+#
+$caller << CONNECT lobby host $lobby_host port $lobby_port node-id $lobby_id user-id $caller_id group $group
+AUTHENTICATE user $caller token $token
+assert (($response.header.type == 'ok'))
+assert (($response.payload.your_aep == $caller_aep))
+
+CALL user $caller
+assert (($response.header.type == 'ok'))
+
+wait-for-exit

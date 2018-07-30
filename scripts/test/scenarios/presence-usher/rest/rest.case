@@ -1,0 +1,57 @@
+#########################################################
+#
+# Scenario:
+#	- Simple script to test rest connectivity
+#
+# Expected Result:
+#	- all commands should be succesful
+#
+#########################################################
+
+#
+# Presence Information
+#
+$pres_host       << "localhost"
+$pres_port       << 4000
+$pres_id         << "p01"
+$presence_aep    << (($pres_id + "=presence"))
+
+#
+# Usher Information
+#
+$usher_id        << "SUZIEQ"
+
+#
+# Lobby Information
+#
+$lobby_id        << "lobster"
+$lobby_aep       << (($lobby_id + "=lobby"))
+
+#
+# Agent Information
+#
+$group           << "com.3apples.co"
+$agent_id        << "vinod"
+$agent_aep       << (($agent_id + "=user," + $pres_id + "=presence"))
+$token           << "abcd"
+
+#
+# Caller Information
+#
+$caller          << "who_kaun_thee"
+$caller_aep      << (($caller + "=user," + $lobby_id + "=lobby"))
+
+#
+# REST Commands
+#
+$usher_http      << rest-init usher id $usher_id
+$pres_http       << rest-init presence id $pres_id host $pres_host port $pres_port proxy-prefix "/presence/"
+
+rest-get show-response node $usher_http path "/diagnostics/groups"
+rest-get show-response node $usher_http path "/diagnostics/qs"
+rest-get show-response node $usher_http path "/diagnostics/agents"
+rest-get show-response node $pres_host  path "/diagnostics/xxx" timeout 1000
+
+rest-post show-response node $usher_http path "/common/log/level/stdout/error" body (({ test : "ok" }))
+
+exit
