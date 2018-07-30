@@ -1,3 +1,98 @@
+# [6.8.8](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.8)
+
+## Fixed
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/3001425b0d896d14188307cd0cc84ce195ad9e04) Persist recent index.d.ts changes in JSDoc<br />
+
+# [6.8.7](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.7)
+
+## Fixed
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/e8449c4bf1269a2cc423708db6f0b47a383d33f0) Fix package browser field descriptor ([#1046](https://github.com/dcodeIO/protobuf.js/issues/1046))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/996b3fa0c598ecc73302bfc39208c44830f07b1a) Fix static codegen issues with uglifyjs3<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/a06317139b92fdd8c6b3b188fb7b9704dc8ccbf1) Fix lint issues / pbts on windows<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/a927a6646e8fdddebcb3e13bc8b28b041b3ee40a) Fix empty 'bytes' field decoding, now using Buffer where applicable ([#1020](https://github.com/dcodeIO/protobuf.js/issues/1020))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/f13a81fb41fbef2ce9dcee13f23b7276c83fbcfd) Fix circular dependency of Namespace and Enum ([#994](https://github.com/dcodeIO/protobuf.js/issues/994))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/c05c58fad61c16e5ce20ca19758e4782cdd5d2e3) Ignore optional commas in aggregate options ([#999](https://github.com/dcodeIO/protobuf.js/issues/999))<br />
+
+## New
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/36fc964b8db1e4372c76b1baf9f03857cd875b07) Make Message<T> have a default type param ([#1086](https://github.com/dcodeIO/protobuf.js/issues/1086))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/996b3fa0c598ecc73302bfc39208c44830f07b1a) Explicitly define service method names when generating static code, see [#857](https://github.com/dcodeIO/protobuf.js/issues/857)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/07c5d59e1da8c5533a39007ba332928206281408) Also handle services in ext/descriptor ([#1001](https://github.com/dcodeIO/protobuf.js/issues/1001))<br />
+
+## CLI
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/2c5ef95818a310243f88ffba0331cd47ee603c0a) Extend list of ignored ESLint rules for pbjs, fixes [#1085](https://github.com/dcodeIO/protobuf.js/issues/1085)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/8576b49ad3e55b8beae2a8f044c51040484eef12) Fix declared return type of pbjs/pbts callback ([#1025](https://github.com/dcodeIO/protobuf.js/issues/1025))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/9fceaa69667895e609a3ed78eb2efa7a0ecfb890) Added an option to pbts to allow custom imports ([#1038](https://github.com/dcodeIO/protobuf.js/issues/1038))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/65d113b0079fa2570837f3cf95268ce24714a248) Get node executable path from process.execPath ([#1018](https://github.com/dcodeIO/protobuf.js/issues/1018))<br />
+
+## Other
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/b611875cfbc1f98d8973a2e86f1506de84f00049) Slim down CI testing and remove some not ultimately necesssary dependencies with audit issues<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/812b38ddabb35e154f9ff94f32ad8ce2a70310f1) Move global handling to util, see [#995](https://github.com/dcodeIO/protobuf.js/issues/995)<br />
+
+# [6.8.6](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.6)
+
+## Fixed
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/2ee1028d631a328e152d7e09f2a0e0c5c83dc2aa) Fix typeRefRe being vulnerable to ReDoS<br />
+
+# [6.8.5](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.6)
+
+## New
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/462132f222d8febb8211d839635aad5b82dc6315) Preserve comments when serializing/deserializing with toJSON and fromJSON. ([#983](https://github.com/dcodeIO/protobuf.js/issues/983))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/d29c0caa715a14214fc755b3cf10ac119cdaf199) Add more details to some frequent error messages ([#962](https://github.com/dcodeIO/protobuf.js/issues/962))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/8400f87ad8ed2b47e659bc8bb6c3cf2467802425) Add IParseOptions#alternateCommentMode ([#968](https://github.com/dcodeIO/protobuf.js/issues/968))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/d6e3b9e218896ec1910e02448b5ee87e4d96ede6) Added field_mask to built-in common wrappers ([#982](https://github.com/dcodeIO/protobuf.js/issues/982))<br />
+
+## Other
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/635fef013fbb3523536d92c690ffd7d84829db35) Remove code climate config in order to use 'in-app' config instead<br />
+
+# [6.8.4](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.4)
+
+## Other
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/69440c023e6962c644715a0c95363ddf19db648f) Update jsdoc dependency (pinned vulnerable marked)<br />
+
+# [6.8.3](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.3)
+
+## CLI
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/cc991a058b0636f3454166c76de7b664cf23a8f4) Use correct safeProp in json-module target, see [#956](https://github.com/dcodeIO/protobuf.js/issues/956)<br />
+
+# [6.8.2](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.2)
+
+## Other
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/6fc6481d790648e9e2169a961ad31a732398c911) Include dist files in npm package, see [#955](https://github.com/dcodeIO/protobuf.js/issues/955)<br />
+
+# [6.8.1](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.1)
+
+## Fixed
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/db2dd49f6aab6ecd606eee334b95cc0969e483c2) Prevent invalid JSDoc names when generating service methods, see [#870](https://github.com/dcodeIO/protobuf.js/issues/870)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/62297998d681357ada70fb370b99bac5573e5054) Prevent parse errors when generating service method names, see [#870](https://github.com/dcodeIO/protobuf.js/issues/870)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/478f332e0fc1d0c318a70b1514b1d59c8c200c37) Support parsing nested option-values with or without ':' ([#951](https://github.com/dcodeIO/protobuf.js/issues/951), fixes [#946](https://github.com/dcodeIO/protobuf.js/issues/946))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/83477ca8e0e1f814ac79a642ea656f047563613a) Add support for reserved keyword in enums ([#950](https://github.com/dcodeIO/protobuf.js/issues/950), fixes [#949](https://github.com/dcodeIO/protobuf.js/issues/949))<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/c482a5b76fd57769eae4308793e3ff8725264664) Unified safe property escapes and added a test for [#834](https://github.com/dcodeIO/protobuf.js/issues/834)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/1724581c36ecc4fc166ea14a9dd57af5e093a467) Fix codegen if type name starts with "Object"<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/adecd544c5fcbeba28d502645f895024e3552970) Fixed dependency for json-module to use "light".<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/2a8dd74fca70d4e6fb41328a7cee81d1d50ad7ad) Basic support for URL prefixes in google.protobuf.Any types.<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/be78a3d9bc8d9618950c77f9e261b422670042ce) fixed 'error is not defined linter warning when using static/static-module and es6<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/c712447b309ae81134c7afd60f8dfa5ecd3be230) Fixed wrong type_url for any type (no leading '.' allowed).<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/145bda25ee1de2c0678ce7b8a093669ec2526b1d) Fixed fromObject() for google.protobuf.Any types.<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/7dec43d9d847481ad93fca498fd970b3a4a14b11) Handle case where 'extendee' is undefined in ext/descriptor<br />
+
+## CLI
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/20a26271423319085d321878edc5166a5449e68a) Sanitize CR-only line endings (coming from jsdoc?)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/19d2af12b5db5a0f668f50b0cae3ee0f8a7affc2) Make sure enum typings become generated ([#884](https://github.com/dcodeIO/protobuf.js/issues/884) didn't solve this)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/a2c72c08b0265b112d367fa3d33407ff0de955b9) Remove exclude and include patterns from jsdoc config<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/9afb8a2ff27c1e0a999d7331f3f65f568f5cced5) Skip defaults when generating proto3<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/952c7d1b478cc7c6de82475a17a1387992e8651f) Wait for both the 'end' and 'close' event to happen before finishing in pbts, see [#863](https://github.com/dcodeIO/protobuf.js/issues/863)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/ed7e2e71f5cde27c4128f4f2e3f4782cc51fbec7) Accept null for optional fields in generated static code<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/27cc66a539251216ef10aea04652d58113949df9) Annotate TS classes with @implements<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/05e7e0636727008c72549459b8594fa0442d346f) Annotate virtual oneofs as string literal unions<br />
+
+## New
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/685adb0e7ef0f50e4b93a105013547884957cc98) Also check for reserved ids and names in enums<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/843d0d5b927968025ca11babff28495dd3bb2863) Also support 'reserved' in enum descriptors<br />
+
+## Other
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/a8376b57fb0a858adff9dc8a1d1b5372eff9d85c) Include just relevant files in npm package, fixes [#781](https://github.com/dcodeIO/protobuf.js/issues/781)<br />
+[:hash:](https://github.com/dcodeIO/protobuf.js/commit/bda1bc6917c681516f6be8be8f0e84ba1262c4ce) Fix travis build<br />
+
 # [6.8.0](https://github.com/dcodeIO/protobuf.js/releases/tag/6.8.0)
 
 ## Breaking

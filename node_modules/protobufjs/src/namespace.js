@@ -5,12 +5,12 @@ module.exports = Namespace;
 var ReflectionObject = require("./object");
 ((Namespace.prototype = Object.create(ReflectionObject.prototype)).constructor = Namespace).className = "Namespace";
 
-var Enum     = require("./enum"),
-    Field    = require("./field"),
+var Field    = require("./field"),
     util     = require("./util");
 
 var Type,    // cyclic
-    Service; // "
+    Service,
+    Enum;
 
 /**
  * Constructs a new namespace instance.
@@ -39,18 +39,47 @@ Namespace.fromJSON = function fromJSON(name, json) {
  * Converts an array of reflection objects to JSON.
  * @memberof Namespace
  * @param {ReflectionObject[]} array Object array
+ * @param {IToJSONOptions} [toJSONOptions] JSON conversion options
  * @returns {Object.<string,*>|undefined} JSON object or `undefined` when array is empty
  */
-function arrayToJSON(array) {
+function arrayToJSON(array, toJSONOptions) {
     if (!(array && array.length))
         return undefined;
     var obj = {};
     for (var i = 0; i < array.length; ++i)
-        obj[array[i].name] = array[i].toJSON();
+        obj[array[i].name] = array[i].toJSON(toJSONOptions);
     return obj;
 }
 
 Namespace.arrayToJSON = arrayToJSON;
+
+/**
+ * Tests if the specified id is reserved.
+ * @param {Array.<number[]|string>|undefined} reserved Array of reserved ranges and names
+ * @param {number} id Id to test
+ * @returns {boolean} `true` if reserved, otherwise `false`
+ */
+Namespace.isReservedId = function isReservedId(reserved, id) {
+    if (reserved)
+        for (var i = 0; i < reserved.length; ++i)
+            if (typeof reserved[i] !== "string" && reserved[i][0] <= id && reserved[i][1] >= id)
+                return true;
+    return false;
+};
+
+/**
+ * Tests if the specified name is reserved.
+ * @param {Array.<number[]|string>|undefined} reserved Array of reserved ranges and names
+ * @param {string} name Name to test
+ * @returns {boolean} `true` if reserved, otherwise `false`
+ */
+Namespace.isReservedName = function isReservedName(reserved, name) {
+    if (reserved)
+        for (var i = 0; i < reserved.length; ++i)
+            if (reserved[i] === name)
+                return true;
+    return false;
+};
 
 /**
  * Not an actual constructor. Use {@link Namespace} instead.
@@ -119,12 +148,13 @@ Object.defineProperty(Namespace.prototype, "nestedArray", {
 
 /**
  * Converts this namespace to a namespace descriptor.
+ * @param {IToJSONOptions} [toJSONOptions] JSON conversion options
  * @returns {INamespace} Namespace descriptor
  */
-Namespace.prototype.toJSON = function toJSON() {
+Namespace.prototype.toJSON = function toJSON(toJSONOptions) {
     return util.toObject([
         "options" , this.options,
-        "nested"  , arrayToJSON(this.nestedArray)
+        "nested"  , arrayToJSON(this.nestedArray, toJSONOptions)
     ]);
 };
 
@@ -175,7 +205,7 @@ Namespace.prototype.get = function get(name) {
 Namespace.prototype.getEnum = function getEnum(name) {
     if (this.nested && this.nested[name] instanceof Enum)
         return this.nested[name].values;
-    throw Error("no such enum");
+    throw Error("no such enum: " + name);
 };
 
 /**
@@ -349,7 +379,7 @@ Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChe
 Namespace.prototype.lookupType = function lookupType(path) {
     var found = this.lookup(path, [ Type ]);
     if (!found)
-        throw Error("no such type");
+        throw Error("no such type: " + path);
     return found;
 };
 
@@ -395,7 +425,9 @@ Namespace.prototype.lookupService = function lookupService(path) {
     return found;
 };
 
-Namespace._configure = function(Type_, Service_) {
+// Sets up cyclic dependencies (called in index-light)
+Namespace._configure = function(Type_, Service_, Enum_) {
     Type    = Type_;
     Service = Service_;
+    Enum    = Enum_;
 };

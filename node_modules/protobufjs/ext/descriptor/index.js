@@ -96,6 +96,9 @@ Root.fromDescriptor = function fromDescriptor(descriptor) {
             if (fileDescriptor.extension)
                 for (i = 0; i < fileDescriptor.extension.length; ++i)
                     filePackage.add(Field.fromDescriptor(fileDescriptor.extension[i]));
+            if (fileDescriptor.service)
+                for (i = 0; i < fileDescriptor.service.length; ++i)
+                    filePackage.add(Service.fromDescriptor(fileDescriptor.service[i]));
             var opts = fromDescriptorOptions(fileDescriptor.options, exports.FileOptions);
             if (opts) {
                 var ks = Object.keys(opts);
@@ -400,12 +403,16 @@ Field.fromDescriptor = function fromDescriptor(descriptor, syntax) {
         default: throw Error("illegal label: " + descriptor.label);
     }
 
+	var extendee = descriptor.extendee;
+	if (descriptor.extendee !== undefined) {
+		extendee = extendee.length ? extendee : undefined;
+	}
     var field = new Field(
         descriptor.name.length ? descriptor.name : "field" + descriptor.number,
         descriptor.number,
         fieldType,
         fieldRule,
-        descriptor.extendee.length ? descriptor.extendee : undefined
+        extendee
     );
 
     field.options = fromDescriptorOptions(descriptor.options, exports.FieldOptions);

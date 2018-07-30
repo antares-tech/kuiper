@@ -57,19 +57,23 @@ Service.fromJSON = function fromJSON(name, json) {
             service.add(Method.fromJSON(names[i], json.methods[names[i]]));
     if (json.nested)
         service.addJSON(json.nested);
+    service.comment = json.comment;
     return service;
 };
 
 /**
  * Converts this service to a service descriptor.
+ * @param {IToJSONOptions} [toJSONOptions] JSON conversion options
  * @returns {IService} Service descriptor
  */
-Service.prototype.toJSON = function toJSON() {
-    var inherited = Namespace.prototype.toJSON.call(this);
+Service.prototype.toJSON = function toJSON(toJSONOptions) {
+    var inherited = Namespace.prototype.toJSON.call(this, toJSONOptions);
+    var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
     return util.toObject([
         "options" , inherited && inherited.options || undefined,
-        "methods" , Namespace.arrayToJSON(this.methodsArray) || /* istanbul ignore next */ {},
-        "nested"  , inherited && inherited.nested || undefined
+        "methods" , Namespace.arrayToJSON(this.methodsArray, toJSONOptions) || /* istanbul ignore next */ {},
+        "nested"  , inherited && inherited.nested || undefined,
+        "comment" , keepComments ? this.comment : undefined
     ]);
 };
 
@@ -152,7 +156,8 @@ Service.prototype.remove = function remove(object) {
 Service.prototype.create = function create(rpcImpl, requestDelimited, responseDelimited) {
     var rpcService = new rpc.Service(rpcImpl, requestDelimited, responseDelimited);
     for (var i = 0, method; i < /* initializes */ this.methodsArray.length; ++i) {
-        rpcService[util.lcFirst((method = this._methodsArray[i]).resolve().name)] = util.codegen(["r","c"], util.lcFirst(method.name))("return this.rpcCall(m,q,s,r,c)")({
+        var methodName = util.lcFirst((method = this._methodsArray[i]).resolve().name).replace(/[^$\w_]/g, "");
+        rpcService[methodName] = util.codegen(["r","c"], util.isReserved(methodName) ? methodName + "_" : methodName)("return this.rpcCall(m,q,s,r,c)")({
             m: method,
             q: method.resolvedRequestType.ctor,
             s: method.resolvedResponseType.ctor

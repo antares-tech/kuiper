@@ -70,7 +70,7 @@ function escape(str) {
     return str.replace(/[\\"']/g, "\\$&")
               .replace(/\r/g, "\\r")
               .replace(/\n/g, "\\n")
-              .replace(/\u0000/g, "\\0");
+              .replace(/\u0000/g, "\\0"); // eslint-disable-line no-control-regex
 }
 
 function value(v) {
@@ -238,6 +238,8 @@ function buildFieldOptions(field) {
                     return;
                 break;
             case "default":
+                if (syntax === 3)
+                    return;
                 // skip default (resolved) default values
                 if (field.long && !util.longNeq(field.defaultValue, types.defaults[field.type]) || !field.long && field.defaultValue === types.defaults[field.type])
                     return;

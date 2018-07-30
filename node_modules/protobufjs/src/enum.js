@@ -5,7 +5,8 @@ module.exports = Enum;
 var ReflectionObject = require("./object");
 ((Enum.prototype = Object.create(ReflectionObject.prototype)).constructor = Enum).className = "Enum";
 
-var util = require("./util");
+var Namespace = require("./namespace"),
+    util = require("./util");
 
 /**
  * Constructs a new enum instance.
@@ -15,8 +16,10 @@ var util = require("./util");
  * @param {string} name Unique name within its namespace
  * @param {Object.<string,number>} [values] Enum values as an object, by name
  * @param {Object.<string,*>} [options] Declared options
+ * @param {string} [comment] The comment for this enum
+ * @param {Object.<string,string>} [comments] The value comments for this enum
  */
-function Enum(name, values, options) {
+function Enum(name, values, options, comment, comments) {
     ReflectionObject.call(this, name, options);
 
     if (values && typeof values !== "object")
@@ -35,10 +38,22 @@ function Enum(name, values, options) {
     this.values = Object.create(this.valuesById); // toJSON, marker
 
     /**
+     * Enum comment text.
+     * @type {string|null}
+     */
+    this.comment = comment;
+
+    /**
      * Value comment texts, if any.
      * @type {Object.<string,string>}
      */
-    this.comments = {};
+    this.comments = comments || {};
+
+    /**
+     * Reserved ranges, if any.
+     * @type {Array.<number[]|string>}
+     */
+    this.reserved = undefined; // toJSON
 
     // Note that values inherit valuesById on their prototype which makes them a TypeScript-
     // compatible enum. This is used by pbts to write actual enum definitions that work for
@@ -65,17 +80,24 @@ function Enum(name, values, options) {
  * @throws {TypeError} If arguments are invalid
  */
 Enum.fromJSON = function fromJSON(name, json) {
-    return new Enum(name, json.values, json.options);
+    var enm = new Enum(name, json.values, json.options, json.comment, json.comments);
+    enm.reserved = json.reserved;
+    return enm;
 };
 
 /**
  * Converts this enum to an enum descriptor.
+ * @param {IToJSONOptions} [toJSONOptions] JSON conversion options
  * @returns {IEnum} Enum descriptor
  */
-Enum.prototype.toJSON = function toJSON() {
+Enum.prototype.toJSON = function toJSON(toJSONOptions) {
+    var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
     return util.toObject([
-        "options" , this.options,
-        "values"  , this.values
+        "options"  , this.options,
+        "values"   , this.values,
+        "reserved" , this.reserved && this.reserved.length ? this.reserved : undefined,
+        "comment"  , keepComments ? this.comment : undefined,
+        "comments" , keepComments ? this.comments : undefined
     ]);
 };
 
@@ -88,7 +110,7 @@ Enum.prototype.toJSON = function toJSON() {
  * @throws {TypeError} If arguments are invalid
  * @throws {Error} If there is already a value with this name or id
  */
-Enum.prototype.add = function(name, id, comment) {
+Enum.prototype.add = function add(name, id, comment) {
     // utilized by the parser but not by .fromJSON
 
     if (!util.isString(name))
@@ -98,11 +120,17 @@ Enum.prototype.add = function(name, id, comment) {
         throw TypeError("id must be an integer");
 
     if (this.values[name] !== undefined)
-        throw Error("duplicate name");
+        throw Error("duplicate name '" + name + "' in " + this);
+
+    if (this.isReservedId(id))
+        throw Error("id " + id + " is reserved in " + this);
+
+    if (this.isReservedName(name))
+        throw Error("name '" + name + "' is reserved in " + this);
 
     if (this.valuesById[id] !== undefined) {
         if (!(this.options && this.options.allow_alias))
-            throw Error("duplicate id");
+            throw Error("duplicate id " + id + " in " + this);
         this.values[name] = id;
     } else
         this.valuesById[this.values[name] = id] = name;
@@ -118,18 +146,36 @@ Enum.prototype.add = function(name, id, comment) {
  * @throws {TypeError} If arguments are invalid
  * @throws {Error} If `name` is not a name of this enum
  */
-Enum.prototype.remove = function(name) {
+Enum.prototype.remove = function remove(name) {
 
     if (!util.isString(name))
         throw TypeError("name must be a string");
 
     var val = this.values[name];
-    if (val === undefined)
-        throw Error("name does not exist");
+    if (val == null)
+        throw Error("name '" + name + "' does not exist in " + this);
 
     delete this.valuesById[val];
     delete this.values[name];
     delete this.comments[name];
 
     return this;
+};
+
+/**
+ * Tests if the specified id is reserved.
+ * @param {number} id Id to test
+ * @returns {boolean} `true` if reserved, otherwise `false`
+ */
+Enum.prototype.isReservedId = function isReservedId(id) {
+    return Namespace.isReservedId(this.reserved, id);
+};
+
+/**
+ * Tests if the specified name is reserved.
+ * @param {string} name Name to test
+ * @returns {boolean} `true` if reserved, otherwise `false`
+ */
+Enum.prototype.isReservedName = function isReservedName(name) {
+    return Namespace.isReservedName(this.reserved, name);
 };
