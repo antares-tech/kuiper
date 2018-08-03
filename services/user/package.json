@@ -18,8 +18,10 @@
     "jade": "~1.11.0",
     "moment": "^2.18.1",
     "morgan": "~1.6.1",
+    "pbkdf2": "^3.0.16",
     "pm2": "^2.6.1",
     "prettyjson": "^1.2.1",
+    "randomstring": "^1.1.5",
     "serve-favicon": "^2.3.0",
     "uuid": "^3.0.1"
   },
