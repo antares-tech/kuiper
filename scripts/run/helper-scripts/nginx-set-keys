@@ -1,0 +1,26 @@
+#!/bin/bash
+
+PATH_NGINX=/etc/nginx/ssl
+
+function usage {
+	echo Usage : $0 'common-name';
+	exit 1;
+}
+
+[ $# -lt 1 ] && usage;
+
+#
+# If path does not exist create directory else continue
+#
+echo 
+sudo mkdir -p $PATH_NGINX
+
+#
+# Generate OpenSSL self signed certificate in ngnix ssl directory
+#
+sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -subj "/O=3A/CN=$1" -keyout $PATH_NGINX/dev-key.key -out $PATH_NGINX/dev-cert.crt
+echo
+
+# Restart ngnix server to update certificates
+#
+#sudo service nginx restart

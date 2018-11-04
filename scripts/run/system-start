@@ -1,0 +1,77 @@
+#!/bin/bash
+
+#
+# Just is just for the fucking nvm (that too just in case you fuck up nvm installation)
+#
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Some variables used in this script
+PROFILE_NAME=default
+SNAG_TOP=../..
+SNAG_SCRIPTS=$SNAG_TOP/scripts/admin
+CONSUL_DATA_DIR=/tmp/consul
+CLUSTER_PORT=1443
+PROFILE_NAME=default
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --host    (MANDATORY) : your machine name';
+	echo '      --profile  (OPTIONAL) : defaults to "default"';
+	echo '      --wait     (OPTIONAL) : consul wait time';
+	echo '      --help                : print this usage';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--profile' ] && { PROFILE_NAME=$2; shift; }
+	[ "$1" == '--host'    ] && { HOST=$2; shift; }
+	[ "$1" == '--wait'    ] && { WAIT_TIME=$2; shift; }
+	[ "$1" == '--help' ] && { usage; }
+
+	shift;
+done
+
+#
+# Check mandatories
+#
+[ -z `which gnatsd` ] && { echo gnatsd not found; exit 1; }
+[ -z `which consul` ] && { echo consul not found; exit 1; }
+[ "$PROFILE_NAME" == "" ] && usage;
+[ "$HOST" == "" ] && usage;
+[ -d $SNAG_SCRIPTS ] || { echo "could not find $SNAG_SCRIPTS"; exit 1; }
+
+
+# 
+nvm use v8.11.0
+
+# Clean Startup, remove consul data and clear pm2
+rm -rf $CONSUL_DATA_DIR
+pm2 delete all
+
+set -o errexit
+
+#--------------NATS & CONSUL----------------------------
+
+pm2 start --name _nats gnatsd --interpreter none -x
+pm2 start --name _consul consul --interpreter none -x -- agent -server -bootstrap -data-dir $CONSUL_DATA_DIR -bind 127.0.0.1
+
+[ -z "$WAIT_TIME" ] && WAIT_TIME=3
+
+echo
+echo waiting $WAIT_TIME seconds for consul to come up ...
+sleep $WAIT_TIME
+
+$SNAG_SCRIPTS/conf-set --profile $SNAG_SCRIPTS/templates/kv-snag.$PROFILE_NAME.yml --host $HOST
+
+#------------Services-----------------------------------
+
+cd $SNAG_TOP/services/user
+pm2 start startup.js --name service.user -- --dev
+
+#------------Applications-------------------------------
+
+cd $SNAG_TOP/apps/auth
+pm2 start bin/startup.js --name app.auth -- --name auth
