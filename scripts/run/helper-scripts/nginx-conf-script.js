@@ -41,7 +41,7 @@ function main () {
 
 		fs.writeFileSync (temp_conf_file, content, "utf8");
 
-		exec_stdout = execSync (`sudo mv ${temp_conf_file} /etc/nginx/sites-available/3apples`);
+		exec_stdout = execSync (`sudo mv ${temp_conf_file} /etc/nginx/sites-available/snag`);
 		exec_stdout = execSync (`sudo bash -c 'cd /etc/nginx/sites-enabled; ln -sf ../sites-available/snag default'`);
 
 		process.exit (0);
