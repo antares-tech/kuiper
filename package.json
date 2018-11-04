@@ -1,8 +1,11 @@
 {
   "name": "snag",
   "version": "1.0.0",
-  "description": "Microservices framework by 3Apples",
+  "description": "Microservices framework by Antares Tech",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "directories": {
     "test": "test"
   },
@@ -55,17 +58,14 @@
     "ws": "^3.2.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/3Apples/snag.git"
   },
-  "author": "3Apples",
+  "author": "Antares Tech",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/3Apples/snag/issues"
+    "url": "https://github.com/AntaresMetal/snag"
   },
-  "homepage": "https://github.com/3Apples/snag#readme"
+  "homepage": "https://github.com/AntaresMetal/snag"
 }
