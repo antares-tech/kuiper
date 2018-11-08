@@ -60,12 +60,12 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AntaresMetal/snag.git"
+    "url": "git+https://github.com/AntaresMetal/kuiper.git"
   },
   "author": "Antares Tech",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AntaresMetal/snag"
+    "url": "https://github.com/AntaresMetal/kuiper"
   },
-  "homepage": "https://github.com/AntaresMetal/snag"
+  "homepage": "https://github.com/AntaresMetal/kuiper"
 }
