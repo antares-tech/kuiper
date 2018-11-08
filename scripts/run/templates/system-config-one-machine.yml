@@ -1,0 +1,78 @@
+
+main:
+    ###############################################
+    #
+    # Set nginx
+    #
+    # #############################################
+    -   section : 'nginx'
+        target  : 'nginx'
+        jobs    :
+          - name   : 'set self signed openSSL key and cert'
+            action : 'run-script'
+            data   : 
+                path : './helper-scripts/nginx-set-keys'
+                args :
+                    -  key   : '@host'
+                       value : ''
+          - name   : 'set nginx configuration'
+            action : 'run-script'
+            data   : 
+                path : './helper-scripts/nginx-conf-script.js' 
+                args :
+                    -  key   : '--template'
+                       value : './templates/nginx-template'
+                    -  key   : '--host'
+                       value : '@host'
+                    -  key   : '--user'
+                       value : '@user'
+          - name   : 'restart nginx'
+            action : 'run-script'
+            data   :
+                path : 'sudo service nginx restart; echo;'
+                args : []
+    ###############################################
+    #
+    # Auth Gateway
+    #
+    ###############################################
+    -   section : 'auth gateway'
+        target  : 'auth app'
+        jobs    :
+          - name   : 'client credentials for LC'
+            action : 'run-script'
+            data   : 
+                path : '../../apps/auth/scripts/add-client'
+                args :
+                    -  key   : '--cid'
+                       value : '9728060ab4a1f636c51f6e9227adca74a92f87ea3fad2970-heimdallr.auth.com'
+                    -  key   : '--secret'
+                       value : 'e68f31192a1928b324c60108e15a4c86089c35ccac0ef7dcfd26839f00cc750e'
+                    -  key   : '--type'
+                       value : 'web'
+                    -  key   : '--app-name'
+                       value : 'vc'
+                    -  key   : '--cb-url'
+                       value : '@protocol://@host/landing/auth/callback'
+                    -  key   : '--contact'
+                       value : '@contact'
+                    -  key   : '--sso'
+                       value : 'local+anon'
+
+          - name   : 'client credentials for LC ADMIN'
+            action : 'run-script'
+            data   : 
+                path : '../../apps/auth/scripts/add-client'
+                args :
+                    -  key   : '--cid'
+                       value : 'e17c63eee66c3ed863ce0130e3548af8a7d3d8cf7cfb0ee5-heimdallr.auth.com'
+                    -  key   : '--secret'
+                       value : '96af5fd20e113ad3f2a6c195546ae2bcb4155f8662105b7b681bd55eaf224b18'
+                    -  key   : '--type'
+                       value : 'web'
+                    -  key   : '--app-name'
+                       value : 'vc admin'
+                    -  key   : '--cb-url'
+                       value : '@protocol://@host/vc-admin/auth/callback'
+                    -  key   : '--contact'
+                       value : '@contact'

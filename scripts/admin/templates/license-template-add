@@ -1,8 +1,0 @@
-{
-	"name"            : "__NAME__",
-	"maxHours"        : "__MAXHOURS__",
-	"maxConcurrency"  : "__MAXCONCURRENCY__",
-	"maxAttendees"    : "__MAXATTENDEES__",
-	"licenseDuration" : "__DURATION__",
-	"createdBy"       : "__WHO__"
-}
