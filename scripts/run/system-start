@@ -64,7 +64,7 @@ echo
 echo waiting $WAIT_TIME seconds for consul to come up ...
 sleep $WAIT_TIME
 
-$SNAG_SCRIPTS/conf-set --profile $SNAG_SCRIPTS/templates/kv-snag.$PROFILE_NAME.yml --host $HOST
+$SNAG_SCRIPTS/conf-set --profile $SNAG_SCRIPTS/templates/kv-kuiper.$PROFILE_NAME.yml --host $HOST
 
 #------------Services-----------------------------------
 

@@ -41,8 +41,8 @@ function main () {
 
 		fs.writeFileSync (temp_conf_file, content, "utf8");
 
-		exec_stdout = execSync (`sudo mv ${temp_conf_file} /etc/nginx/sites-available/snag`);
-		exec_stdout = execSync (`sudo bash -c 'cd /etc/nginx/sites-enabled; ln -sf ../sites-available/snag default'`);
+		exec_stdout = execSync (`sudo mv ${temp_conf_file} /etc/nginx/sites-available/kuiper`);
+		exec_stdout = execSync (`sudo bash -c 'cd /etc/nginx/sites-enabled; ln -sf ../sites-available/kuiper default'`);
 
 		process.exit (0);
 
@@ -50,7 +50,7 @@ function main () {
 		console.log ('error : ', e);
 
 		if (exec_stdout) {
-			console.log (`!error : moving ${temp_conf_file} to "/etc/nginx/sites-available/snag" failed`);
+			console.log (`!error : moving ${temp_conf_file} to "/etc/nginx/sites-available/kuiper" failed`);
 			console.log (`-----------`);
 			console.log (`>>>> STDOUT`);
 			console.log (`${exec_stdout}`);
