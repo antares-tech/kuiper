@@ -8,8 +8,9 @@ export NVM_DIR="$HOME/.nvm"
 
 # Some variables used in this script
 PROFILE_NAME=default
-SNAG_TOP=../..
-SNAG_SCRIPTS=$SNAG_TOP/scripts/admin
+KUIPER_TOP=../..
+ADMIN_SCRIPTS=$KUIPER_TOP/scripts/admin
+RUN_SCRIPTS=$KUIPER_TOP/scripts/run
 CONSUL_DATA_DIR=/tmp/consul
 CLUSTER_PORT=1443
 PROFILE_NAME=default
@@ -41,7 +42,7 @@ done
 [ -z `which consul` ] && { echo consul not found; exit 1; }
 [ "$PROFILE_NAME" == "" ] && usage;
 [ "$HOST" == "" ] && usage;
-[ -d $SNAG_SCRIPTS ] || { echo "could not find $SNAG_SCRIPTS"; exit 1; }
+[ -d $ADMIN_SCRIPTS ] || { echo "could not find $ADMIN_SCRIPTS"; exit 1; }
 
 
 # 
@@ -64,14 +65,14 @@ echo
 echo waiting $WAIT_TIME seconds for consul to come up ...
 sleep $WAIT_TIME
 
-$SNAG_SCRIPTS/conf-set --profile $SNAG_SCRIPTS/templates/kv-kuiper.$PROFILE_NAME.yml --host $HOST
+$ADMIN_SCRIPTS/conf-set --profile $RUN_SCRIPTS/templates/kv-kuiper.$PROFILE_NAME.yml --host $HOST
 
 #------------Services-----------------------------------
 
-cd $SNAG_TOP/services/user
+cd $KUIPER_TOP/services/user
 pm2 start startup.js --name service.user -- --dev
 
 #------------Applications-------------------------------
 
-cd $SNAG_TOP/apps/auth
+cd $KUIPER_TOP/apps/auth
 pm2 start bin/startup.js --name app.auth -- --name auth
