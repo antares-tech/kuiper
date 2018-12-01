@@ -33,4 +33,4 @@ curl -s https://releases.hashicorp.com/consul/0.9.2/consul_0.9.2_linux_amd64.zip
 
 cd $TEMPDIR/
 unzip -o consul.zip
-mv consul /usr/local/3a/bin
+mv consul /usr/local/antares/bin
