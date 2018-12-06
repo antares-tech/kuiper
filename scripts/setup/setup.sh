@@ -38,10 +38,10 @@ export FOR_USER
 #
 # Setup the environment
 #
-cp env/3a.sh /etc/profile.d/3a.sh
+cp env/antares.sh /etc/profile.d/antares.sh
 
 mkdir -p $TEMPDIR
-mkdir -p /usr/local/3a/bin
+mkdir -p /usr/local/antares/bin
 
 #
 # Install stuff
