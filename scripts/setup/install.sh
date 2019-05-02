@@ -3,6 +3,7 @@
 # THIS SCRIPT ASSUMES SUDO PERMISSIONS
 
 . vars.sh
+. funcs.sh
 
 # Install Basics
 $DIR/install-basics.sh
@@ -20,7 +21,7 @@ $DIR/install-mongo.sh
 #$DIR/install-java.sh
 
 # Install Nats
-#$DIR/install-nats.sh
+$DIR/install-nats.sh
 
 # Install Grunt
 #$DIR/install-grunt.sh
@@ -33,3 +34,5 @@ $DIR/install-mongo.sh
 
 # Install REDIS
 #$DIR/install-redis.sh
+
+banner "Source ~/.bashrc or login and logout to proceed"
