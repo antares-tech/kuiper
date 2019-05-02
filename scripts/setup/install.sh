@@ -14,7 +14,7 @@ $DIR/install-consul.sh
 $DIR/install-node.sh
 
 # Install Mongo
-#$DIR/install-mongo.sh
+$DIR/install-mongo.sh
 
 # Install Java
 #$DIR/install-java.sh
