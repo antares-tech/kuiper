@@ -1,3 +1,3 @@
-# Set stuff up for 3Apples Microservices environment
+# Set stuff up for Kuiper Microservices environment
 
 PATH=$PATH:/usr/local/antares/bin

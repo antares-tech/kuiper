@@ -4,8 +4,6 @@
 
 . vars.sh
 
-set -x
-
 # Install Basics
 $DIR/install-basics.sh
 
@@ -16,22 +14,22 @@ $DIR/install-consul.sh
 $DIR/install-node.sh
 
 # Install Mongo
-$DIR/install-mongo.sh
+#$DIR/install-mongo.sh
 
 # Install Java
 #$DIR/install-java.sh
 
 # Install Nats
-$DIR/install-nats.sh
+#$DIR/install-nats.sh
 
 # Install Grunt
-$DIR/install-grunt.sh
+#$DIR/install-grunt.sh
 
 # Install MIsc
-$DIR/install-misc.sh
+#$DIR/install-misc.sh
 
 # Install NGINX
-$DIR/install-nginx.sh
+#$DIR/install-nginx.sh
 
 # Install REDIS
-$DIR/install-redis.sh
+#$DIR/install-redis.sh

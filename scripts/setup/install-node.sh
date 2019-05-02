@@ -1,34 +1,17 @@
 #! /bin/bash
 
-# THIS SCRIPT ASSUMES SUDO PERMISSIONS
-
 . vars.sh
 . funcs.sh
 
-check_sudo || exit 1;
-
-function cleanup {
-	set +x;
-	echo :::: END INSTALLATION :: $BASENAME
-}
-
-function show_err {
-	echo "Error exit in "$BASENAME;
-}
-
-trap "show_err; cleanup;" err
-trap "cleanup;" exit SIGHUP SIGINT SIGTERM
-
-echo :::: BEGIN INSTALLATION :: $BASENAME
-set -x
 
 #
 # Actual start of action
 #
-VERSIONNAME="8.1.0"
+VERSIONNAME="10.15.3"
 ARCHVALUE=64
 URL=http://nodejs.org/dist/v${VERSIONNAME}/node-v${VERSIONNAME}-linux-x${ARCHVALUE}.tar.gz
 
+banner "Setting up Nodejs version $VERSIONNAME, npm, bunyan, and pm2"
 # setting up the folders and the the symbolic links
 
 printf $URL"\n"
@@ -41,9 +24,11 @@ cp -f ./share/man/man1/node.1 /usr/local/man/man1/ # copy the man file
 cp -f bin/node /usr/local/bin/ # copy node to the bin folder
 ln -sf "/usr/local/lib/node_modules/npm/bin/npm-cli.js" ../npm ## making the symbolic link to npm
 
-npm install -g npm@5.0.2
+npm install -g npm@6.4.1
 
 # print the version of node and npm
+# make node version manager (nvm) use the system's default node js if present
+# it is aliased as "system"
 node -v
 npm -v
 
