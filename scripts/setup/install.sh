@@ -30,9 +30,9 @@ $DIR/install-nats.sh
 #$DIR/install-misc.sh
 
 # Install NGINX
-#$DIR/install-nginx.sh
+$DIR/install-nginx.sh
 
 # Install REDIS
-#$DIR/install-redis.sh
+$DIR/install-redis.sh --for $USER
 
 banner "Source ~/.bashrc or login and logout to proceed"
