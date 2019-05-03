@@ -5,25 +5,3 @@ config/global/auth/protocol     : 'https'
 config/global/auth/proxy        : 'true'
 config/global/auth/proxy_prefix : '/auth'
 config/global/auth/proxy_port   : '443'
-
-# Application Auth Config
-config/app/auth/host           : =host=
-config/app/auth/port           : '3002'
-
-# Org Config
-config/srv/org/db                           : 'mongodb://localhost:27017/org'
-
-# User Config
-config/srv/user/db                          : 'mongodb://localhost:27017/user?maxPoolSize=10'
-config/srv/user/password/salt/length        : '64'
-config/srv/user/password/salt/charset       : 'alphanumeric'
-config/srv/user/password/length             : '64'
-config/srv/user/password/digest             : 'sha512'
-
-# Auth-desktop test app config    
-config/app/auth_desktop/host               : =host=
-config/app/auth_desktop/port               : '2000'
-config/app/auth_desktop/protocol           : 'http'
-config/app/auth_desktop/client_id          : '912086653b1778a5c34b12ac395754c0ee1f61818c56d60f-heimdallr.auth.com'
-config/app/auth_desktop/client_secret      : 'da0c904f6f4274e813851157dd34f3a46cb12c6c7ce47a187d08080e8b62a689'
-config/app/auth_desktop/proxy_prefix       : 'auth-desk'
