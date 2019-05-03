@@ -1,6 +1,0 @@
-language: node_js
-node_js:
- - "0.12"
-before_install:
-  - "git config --global user.name 'gitty-test'"
-  - "git config --global user.email 'travis@gitty'"

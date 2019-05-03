@@ -1,18 +1,11 @@
 #!/bin/bash
 
-#
-# Just is just for the fucking nvm (that too just in case you fuck up nvm installation)
-#
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
 # Some variables used in this script
 PROFILE_NAME=default
 KUIPER_TOP=../..
 ADMIN_SCRIPTS=$KUIPER_TOP/scripts/admin
 RUN_SCRIPTS=$KUIPER_TOP/scripts/run
 CONSUL_DATA_DIR=/tmp/consul
-CLUSTER_PORT=1443
 PROFILE_NAME=default
 
 function usage {
@@ -45,9 +38,6 @@ done
 [ -d $ADMIN_SCRIPTS ] || { echo "could not find $ADMIN_SCRIPTS"; exit 1; }
 
 
-# 
-nvm use v8.11.0
-
 # Clean Startup, remove consul data and clear pm2
 rm -rf $CONSUL_DATA_DIR
 pm2 delete all
@@ -68,11 +58,7 @@ sleep $WAIT_TIME
 $ADMIN_SCRIPTS/conf-set --profile $RUN_SCRIPTS/templates/kv-kuiper.$PROFILE_NAME.yml --host $HOST
 
 #------------Services-----------------------------------
-
-cd $KUIPER_TOP/services/user
-pm2 start startup.js --name service.user -- --dev
+# services used to be here
 
 #------------Applications-------------------------------
-
-cd $KUIPER_TOP/apps/auth
-pm2 start bin/startup.js --name app.auth -- --name auth
+# application used to be here
