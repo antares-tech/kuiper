@@ -1,9 +1,7 @@
-var log  = require ('./log');
-
-class Error_3A extends Error {
-	constructor (key, status_code_recommended, detail_message) {
-		super (key);
-		this.name        = key;
+class Truti extends Error {
+	constructor (name, status_code_recommended, detail_message) {
+		super (name);
+		this.name        = name;
 		this.status_code = status_code_recommended;
 		this.message     = detail_message;
 	}
@@ -18,4 +16,4 @@ class Error_3A extends Error {
 	}
 }
 
-module.exports = Error_3A;
+module.exports = Truti;
