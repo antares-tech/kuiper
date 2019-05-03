@@ -1,13 +1,13 @@
 #!/bin/bash
 
-. func.sh
+. funcs.sh
 
 BASENAME=`basename $0`
 __DIR=`dirname $0`
 DIR=`cd $__DIR; pwd`
 TEMPDIR=/tmp/kuiper
 
-sudo cp env/antares.sh /etc/profile.d/antares.sh
+sudo cp env/kuiper.sh /etc/profile.d/kuiper.sh
 
 sudo mkdir -p $TEMPDIR
 sudo mkdir -p /usr/local/kuiper/bin
@@ -23,6 +23,8 @@ mkdir -p $TEMPDIR
 
 sudo mkdir -p /usr/local/antares/bin
 
+############ SETUP CONSUL #################
+
 banner "Downloading consul"
 curl -s https://releases.hashicorp.com/consul/0.9.2/consul_0.9.2_linux_amd64.zip -o $TEMPDIR/consul.zip
 
@@ -31,7 +33,7 @@ cd $TEMPDIR/
 unzip -o consul.zip
 sudo mv -v consul /usr/local/antares/bin
 
-
+############ SETUP NODEJS #################
 
 VERSIONNAME="10.15.3"
 ARCHVALUE=64
@@ -65,6 +67,7 @@ npm install -g bunyan
 npm install pm2@latest -g
 pm2 update
 
+########### SETUP NATS ###################
 
 banner "Install Nats Streaming server"
 
@@ -84,4 +87,4 @@ banner "Create a generic symbolic link"
 cd /usr/local/antares/bin
 ln -svf nats-streaming-server-$VERSION nats-streaming-server
 
-banner "Source ~/.bashrc or login and logout to proceed"
+banner "Refersh bashrc bash profile. Login and Logout"
