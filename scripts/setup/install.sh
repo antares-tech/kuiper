@@ -1,10 +1,4 @@
 #!/bin/bash
-
-# THIS SCRIPT ASSUMES SUDO PERMISSIONS
-
-. vars.sh
-. funcs.sh
-
 # Install Basics
 $DIR/install-basics.sh
 
