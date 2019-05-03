@@ -6,7 +6,6 @@ KUIPER_TOP=../..
 ADMIN_SCRIPTS=$KUIPER_TOP/scripts/admin
 RUN_SCRIPTS=$KUIPER_TOP/scripts/run
 CONSUL_DATA_DIR=/tmp/consul
-CLUSTER_PORT=1443
 PROFILE_NAME=default
 
 function usage {
