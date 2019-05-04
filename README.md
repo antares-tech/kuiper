@@ -7,6 +7,6 @@ Microservices framework by Antares Tech.
 
 Setup your Ubuntu 18.04 Development Environment by runnning the following command
 ```
-cd scripts/setup/
+cd scripts
 ./setup.sh
 ```
