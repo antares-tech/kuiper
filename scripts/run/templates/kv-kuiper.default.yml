@@ -1,7 +1,0 @@
-# Global Auth Config
-config/global/auth/host         : =host=
-config/global/auth/port         : '3002'
-config/global/auth/protocol     : 'https'
-config/global/auth/proxy        : 'true'
-config/global/auth/proxy_prefix : '/auth'
-config/global/auth/proxy_port   : '443'

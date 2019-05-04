@@ -1,6 +1,22 @@
 #!/bin/bash
 
-. funcs.sh
+function apt_install {
+	echo '########################################################'
+	echo '#'
+	echo '# Installing ' $1 ' ...'
+	echo '#'
+	echo '########################################################'
+
+	sudo apt-get install -y $1
+}
+
+function banner {
+	echo '########################################################'
+	echo '#'
+	echo '# '$*
+	echo '#'
+	echo '########################################################'
+}
 
 BASENAME=`basename $0`
 __DIR=`dirname $0`
