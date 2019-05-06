@@ -24,8 +24,7 @@ DIR=`cd $__DIR; pwd`
 TEMPDIR=/tmp/kuiper
 
 sudo cp env/kuiper.sh /etc/profile.d/kuiper.sh
-
-sudo mkdir -p $TEMPDIR
+mkdir -p $TEMPDIR
 sudo mkdir -p /usr/local/kuiper/bin
 
 apt_install zip 
