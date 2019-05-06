@@ -2,7 +2,7 @@
   "name": "kuiper",
   "version": "0.0.1",
   "description": "Microservices framework by Antares Tech",
-  "main": "index.js",
+  "main": "kuiper.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
