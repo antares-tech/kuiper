@@ -37,17 +37,7 @@ apt_install python3.6
 banner "Creating local directory $TEMPDIR"
 mkdir -p $TEMPDIR
 
-sudo mkdir -p /usr/local/antares/bin
-
-############ SETUP CONSUL #################
-
-banner "Downloading consul"
-curl -s https://releases.hashicorp.com/consul/0.9.2/consul_0.9.2_linux_amd64.zip -o $TEMPDIR/consul.zip
-
-banner "Setting up consul"
-cd $TEMPDIR/
-unzip -o consul.zip
-sudo mv -v consul /usr/local/antares/bin
+sudo mkdir -p /usr/local/kuiper/bin
 
 ############ SETUP NODEJS #################
 
@@ -91,16 +81,16 @@ cd $TEMPDIR
 VERSION=v0.4.0
 wget https://github.com/nats-io/nats-streaming-server/releases/download/$VERSION/nats-streaming-server-$VERSION-linux-amd64.zip
 unzip -o nats-streaming-server-$VERSION-linux-amd64.zip
-mv -v nats-streaming-server-$VERSION-linux-amd64/nats-streaming-server-$VERSION /usr/local/antares/bin
+mv -v nats-streaming-server-$VERSION-linux-amd64/nats-streaming-server-$VERSION /usr/local/kuiper/bin
 
 wget https://github.com/nats-io/gnatsd/releases/download/v1.1.0/gnatsd-v1.1.0-linux-amd64.zip
 unzip -o gnatsd-v1.1.0-linux-amd64.zip
-mv -v gnatsd-v1.1.0-linux-amd64/gnatsd /usr/local/antares/bin
+mv -v gnatsd-v1.1.0-linux-amd64/gnatsd /usr/local/kuiper/bin
 
 
 banner "Create a generic symbolic link"
 
-cd /usr/local/antares/bin
+cd /usr/local/kuiper/bin
 ln -svf nats-streaming-server-$VERSION nats-streaming-server
 
 banner "Refersh bashrc bash profile. Login and Logout"
