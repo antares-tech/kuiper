@@ -3,9 +3,7 @@ const log       = require ('../../lib/log').child ({module : 'test/app-example/a
 
 async function main () {
 	try {
-		log.info ('init appClient');
 		await appClient.init ({name : 'exampleApp'});
-		log.info ('init appClient ok');
 	}
 	catch (err) {
 		log.error ({err : err}, 'appClient init error');
