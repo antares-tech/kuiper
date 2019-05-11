@@ -31,6 +31,7 @@ apt_install zip
 apt_install wget
 apt_install curl
 apt_install python3.6
+apt_install build-essentials
 
 
 banner "Creating local directory $TEMPDIR"
