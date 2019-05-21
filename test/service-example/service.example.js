@@ -17,7 +17,8 @@ async function main (port) {
 		await serviceClient.init ({
 			id   : 'exampleService-01',
 			name : 'exampleService',
-			port : port
+			port : port,
+			namespace : 'namespace01'
 		});
 	}
 	catch (err) {
