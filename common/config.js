@@ -24,4 +24,4 @@ config.defaults = {
 	}
 };
 
-module.eports = config;
+module.exports = config;
