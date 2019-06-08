@@ -1,5 +1,5 @@
 const serviceClient = require ('../../kuiper').serviceClient;
-const log           = require ('../../lib/log').child ({module : 'test/service-example/service.example'});
+const log           = require ('../../utils/log').child ({module : 'test/service-example/service.example'});
 
 const http   = require('http');
 const server = http.createServer();
