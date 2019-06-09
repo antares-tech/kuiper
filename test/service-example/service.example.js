@@ -1,3 +1,4 @@
+/* eslint no-console : off */
 const serviceClient = require ('../../kuiper').serviceClient;
 const log           = require ('../../utils/log').child ({module : 'test/service-example/service.example'});
 
@@ -27,4 +28,15 @@ async function main (port) {
 	}
 
 	log.info ('serviceClient init ok');
+
+	process.on ('SIGINT', async function () {
+		console.log ('Process exiting');
+		try {
+			await serviceClient.deinit ();
+			console.log ('Service deinit ok');
+		}
+		catch (err) {
+			console.error({err : err}, 'error in service deinit');
+		}
+	});
 }
