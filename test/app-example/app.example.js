@@ -1,5 +1,5 @@
 const appClient = require ('../../kuiper').appClient;
-const log       = require ('../../lib/log').child ({module : 'test/app-example/app-example'});
+const log       = require ('../../utils/log').child ({module : 'test/app-example/app-example'});
 
 async function main () {
 	try {
