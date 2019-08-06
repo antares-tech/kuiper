@@ -19,4 +19,30 @@ cd scripts
 ```
 
 ## Usage
-Unfinshed as of now. Check back later maybe!!
+
+### Bsic usage
+
+#### App component
+
+```javascript
+const appClient = require ('kuiper').appClient;
+
+async function init () {
+	/*
+	 * Configuration options for appClient */
+	let config = {
+		"name" : "myApp" 
+	};
+
+	try {
+		await appClient.init (config); // native JS promise
+	}
+	catch (err) {
+		/*
+		 * handle init error */
+		console.log ({err}, 'an error occured in kuiper initialisation');
+	}
+}
+
+init ();
+```
