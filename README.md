@@ -24,6 +24,7 @@ cd scripts
 
 #### App component
 
+__IMPORTANT__ : `natsConfig`(in appClient.init () function call) should be in accordance with [nats](https://github.com/nats-io/nats.js) modules 
 ```javascript
 const appClient = require ('kuiper').appClient;
 
@@ -35,8 +36,6 @@ async function init () {
 	};
 
 	try {
-		/*
-		 * natsConfig should be in accordance with [nats](https://github.com/nats-io/nats.js) modules */
 		await appClient.init (config /*, natsConfig */); // native JS promise
 		/*
 		 * Once initialised
@@ -56,6 +55,7 @@ init ();
 
 #### Service component
 
+__IMPORTANT__ : `natsConfig`(in appClient.init () function call) should be in accordance with [nats](https://github.com/nats-io/nats.js) modules 
 ```javascript
 const serviceClient = require ('kuiper').serviceClient;
 
@@ -66,8 +66,6 @@ async function init () {
 	};
 
 	try {
-		/*
-		 * natsConfig should be in accordance with [nats](https://github.com/nats-io/nats.js) modules */
 		await serviceClient.init (config/*, natsConfig */);
 	}
 	catch (err) {
