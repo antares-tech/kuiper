@@ -20,6 +20,8 @@ cd scripts
 
 ## Usage
 
+__NOTE__ : User will need to have a nats server running to be used as message broker. This module uses [nats](https://github.com/nats-io/nats.js) for service discovery protocol message transfers. 
+
 ### Bsic usage
 
 #### App component
