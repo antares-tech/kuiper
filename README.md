@@ -24,7 +24,7 @@ cd scripts
 
 #### App component
 
-__IMPORTANT__ : `natsConfig`(in appClient.init () function call) should be in accordance with [nats](https://github.com/nats-io/nats.js) modules 
+__IMPORTANT__ : `natsConfig`(in `appClient.init()` function call) should be in accordance with [nats](https://github.com/nats-io/nats.js) modules 
 ```javascript
 const appClient = require ('kuiper').appClient;
 
@@ -55,7 +55,7 @@ init ();
 
 #### Service component
 
-__IMPORTANT__ : `natsConfig`(in appClient.init () function call) should be in accordance with [nats](https://github.com/nats-io/nats.js) modules 
+__IMPORTANT__ : `natsConfig`(in `appClient.init()` function call) should be in accordance with [nats](https://github.com/nats-io/nats.js) modules 
 ```javascript
 const serviceClient = require ('kuiper').serviceClient;
 
@@ -78,7 +78,7 @@ async function init () {
 init ();
 ```
 
-### TODO
+### TODO ins usages
 
 - What kind of data will app get on `appClient.getServices ()`
 - List all config options for `appClient`
