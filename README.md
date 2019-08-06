@@ -36,6 +36,11 @@ async function init () {
 
 	try {
 		await appClient.init (config); // native JS promise
+		/*
+		 * Once initialised
+		 * get list of services anytime by calling getServices API */
+		let currentServices = appClient.getServices ();
+		console.log ({currentServices}, 'list of services available at this moment');
 	}
 	catch (err) {
 		/*
