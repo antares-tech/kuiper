@@ -35,7 +35,9 @@ async function init () {
 	};
 
 	try {
-		await appClient.init (config); // native JS promise
+		/*
+		 * natsConfig should be in accordance with [nats](https://github.com/nats-io/nats.js) modules */
+		await appClient.init (config /*, natsConfig */); // native JS promise
 		/*
 		 * Once initialised
 		 * get list of services anytime by calling getServices API */
@@ -51,3 +53,36 @@ async function init () {
 
 init ();
 ```
+
+#### Service component
+
+```javascript
+const serviceClient = require ('kuiper').serviceClient;
+
+async function init () {
+	let config = {
+		"id"   : "uniqueServiceID-001", //this should be unique for a service name
+		"name" : "serviceType", //this is used to categories different instance of a service type on app side
+	};
+
+	try {
+		/*
+		 * natsConfig should be in accordance with [nats](https://github.com/nats-io/nats.js) modules */
+		await serviceClient.init (config/*, natsConfig */);
+	}
+	catch (err) {
+		/*
+		 * handle service init error */
+		console.error ({err}, 'error in serviceClient init');
+	}
+}
+
+init ();
+```
+
+### TODO
+
+- What kind of data will app get on `appClient.getServices ()`
+- List all config options for `appClient`
+- List all config options for `serviceClient`
+- Examples of other config option usages
