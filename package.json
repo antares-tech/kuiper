@@ -10,15 +10,8 @@
     "test": "test"
   },
   "dependencies": {
-    "assert-plus": "^1.0.0",
     "bunyan": "^1.8.12",
-    "consul": "^0.34.1",
-    "event": "^1.0.0",
-    "moment": "^2.24.0",
-    "nats": "^1.2.10",
-    "node-nats-streaming": "^0.2.2",
-    "util": "^0.12.0",
-    "ws": "^7.0.0"
+    "nats": "^1.2.10"
   },
   "devDependencies": {},
   "repository": {
