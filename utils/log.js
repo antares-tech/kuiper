@@ -1,70 +1,38 @@
-var bunyan        = require('bunyan');
+var bunyan = require('bunyan');
 
-var log = {};
-var name  = 'Kuiper';
-var type  = 'rotating-file';
-var level = 'trace';
+let log   = {};
+let name  = 'Kuiper';
+let type  = 'stdout';
+let level = 'trace';
 
-if (process.env.NODE_ENV !== 'production') {
-	log = bunyan.createLogger ({ 
-		name : `${name}.${type}`,
-		streams : [
-			{
-				name : "stdout",
-				stream : process.stdout,
-				level  : level || 'debug'
-			},
-		]
-	});
-}
-else {
-	/* This is production environment */
-	log = bunyan.createLogger ({ 
-		name : 'kuiper',
-		streams : [
-			{
-				type : "rotating-file",
-				path : './logs/kuiper.log',
-				level  : 'debug'
-			},
-		]
-	});
+let children = [];
+
+log = bunyan.createLogger ({ 
+	name : `${name}.${type}`,
+	streams : [
+		{
+			name : "stdout",
+			stream : process.stdout,
+			level  : level || 'debug'
+		},
+	],
+	serializers: bunyan.stdSerializers
+});
+
+
+function sub_app (__sub_app) {
+	var child = log.child ({sub_app:__sub_app});
+	children.push(child);
+	return child;
 }
 
-/*
- * Overriding the "child" method of bunyan. It does not keep a 
- * track of it's children, and if the levels are changed at 
- * runtime, the new levels are not inherited by the already
- * created children. */
+function sub_module (module) {
+	var child = log.child ({module:module});
+	children.push(child);
+	return child;
+}
 
-var child_method = log.child;
-var children = [];
-log.child = function (options) {
-	var module = options.module;
-
-	var __child = child_method.call (this, options);
-
-	if (!module) {
-		/*
-		 * Express bunyan module also calls this method and may not
-		 * specify a module. Ignore. */
-
-		children.push ({
-			module : module,
-			child  : __child
-		});
-	}
-
-	return __child;
-};
-
-log.set_level = function (stream, level, module) {
-	for (var i = 0; i < children.length; i++) {
-		if (module && (module !== children[i].module))
-			continue;
-
-		children [i].child.levels (stream, level);
-	}
-};
+log.sub_app = sub_app;
+log.sub_module = sub_module;
 
 module.exports = log;
