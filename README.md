@@ -11,13 +11,6 @@ Both Apps and Services will connect to a NATS server and listen on configured ch
 
 Apps will be listening to broadcast messages from services and managing, cataloging(among other things) all services. Managing will include keeping count of how many services of which type (user, media etc) are up etc. App module will provide all live services information when requested.
 
-## Setup dev environment 
-Setup your Ubuntu 18.04 Development Environment by runnning the following command
-```
-cd scripts
-./setup.sh
-```
-
 ## Usage
 
 __NOTE__ : User will need to have a `nats` server running to be used as message broker. This module uses [nats](https://github.com/nats-io/nats.js) for service discovery protocol message transfers. 
@@ -78,6 +71,13 @@ async function init () {
 }
 
 init ();
+```
+
+## Setup dev environment 
+Setup your Ubuntu 18.04 Development Environment by runnning the following command
+```
+cd scripts
+./setup.sh
 ```
 
 ### TODO in usages
