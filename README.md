@@ -80,7 +80,7 @@ async function init () {
 init ();
 ```
 
-### TODO ins usages
+### TODO in usages
 
 - What kind of data will app get on `appClient.getServices ()`
 - List all config options for `appClient`
