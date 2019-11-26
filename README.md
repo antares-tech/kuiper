@@ -22,7 +22,7 @@ cd scripts
 
 __NOTE__ : User will need to have a `nats` server running to be used as message broker. This module uses [nats](https://github.com/nats-io/nats.js) for service discovery protocol message transfers. 
 
-### Bsic usage
+### Basic usage
 
 #### App component
 
@@ -82,7 +82,8 @@ init ();
 
 ### TODO in usages
 
+- List all APIs (and their examples) for appClient and serviceClient
 - What kind of data will app get on `appClient.getServices ()`
-- List all config options for `appClient`
-- List all config options for `serviceClient`
+- List all config options for `appClient.init ()`
+- List all config options for `serviceClient.init ()`
 - Examples of other config option usages
