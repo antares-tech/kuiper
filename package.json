@@ -1,27 +1,27 @@
 {
-  "name": "kuiper",
-  "version": "0.0.1",
-  "description": "Microservices framework by Antares Tech",
-  "main": "kuiper.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "dependencies": {
-    "bunyan": "^1.8.12",
-    "nats": "^1.2.10"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Antares-Tech/kuiper.git"
-  },
-  "author": "Antares Tech",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Antares-Tech/kuiper"
-  },
-  "homepage": "https://github.com/Antares-Tech/kuiper"
+	"name": "@antares-tech/kuiper",
+	"version": "0.0.1",
+	"description": "Microservices framework by Antares Tech",
+	"main": "kuiper.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"directories": {
+		"test": "test"
+	},
+	"dependencies": {
+		"bunyan": "^1.8.12",
+		"nats": "^1.2.10"
+	},
+	"devDependencies": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Antares-Tech/kuiper.git"
+	},
+	"author": "Antares Tech",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Antares-Tech/kuiper"
+	},
+	"homepage": "https://github.com/Antares-Tech/kuiper"
 }
