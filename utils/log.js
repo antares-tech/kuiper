@@ -3,7 +3,7 @@ var bunyan = require('bunyan');
 let log   = {};
 let name  = 'Kuiper';
 let type  = 'stdout';
-let level = 'trace';
+let level = 'error';
 
 let children = [];
 
@@ -13,7 +13,7 @@ log = bunyan.createLogger ({
 		{
 			name : "stdout",
 			stream : process.stdout,
-			level  : level || 'debug'
+			level  : level,
 		},
 	],
 	serializers: bunyan.stdSerializers
