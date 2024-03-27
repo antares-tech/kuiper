@@ -8,9 +8,8 @@
 	},
 	"dependencies": {
 		"bunyan": "^1.8.12",
-		"nats": "^1.2.10"
+		"nats": "^2.21.0"
 	},
-	"devDependencies": {},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/antares-tech/kuiper.git"
